@@ -5,6 +5,13 @@ typealias Record = Pair<String,Double>
 fun fetchData(): List<Record> {
   // Create and return a simulated dataset here
   // Use the listOf() and to() functions to create the dataset
+  val dataset = listOf(
+    "Station A" to 22.5,
+    "Station B" to 19.0,
+    "Station C" to -5.8
+  )
+  return dataset
+
 }
 
 // Challenge: compute average temperature with one line of code
