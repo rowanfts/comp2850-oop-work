@@ -1,21 +1,23 @@
 // Implement the six required functions here
 import java.io.File
-import kotlin.random.Random
 
-fun isValid(word: String): Boolean { //needs more functionalities
-    if (word.length != 5) {
-        println("ERROR: guess must have 5 letters")
+//DO I NEED HEADER COMMENT DOCSTRINGS?
+
+fun isValid(word: String): Boolean {
+    if (word.length != 5) {                 // Checks guess length (must be 5)
+        println("ERROR: Guess must have a length of 5.")
         return false
     }
+    for (char in word) {                    // Checks guess contents (must be letters only)
+        if (!char.isLetter()) {
+            println("ERROR: Guess must only include letters.")
+            return false
+        }
+    }
     return true
-    //also check if input consists only of LETTERS and no numbers and symbols
 } 
 
-/* 
-fun readWordList(filename: String): MutableList<String> { //not yet implemented
-    //reads target words from file, returns them as list of strings
-}
-*/
+fun readWordList(filename: String): MutableList<String>  = File(filename).useLines { it.toMutableList() } //complete!
 
 fun pickRandomWord(words: MutableList<String>): String { //probably inefficient but works
     words.shuffle() //shuffle list once, grab first element every time
@@ -24,51 +26,40 @@ fun pickRandomWord(words: MutableList<String>): String { //probably inefficient 
     for (i in words) {
         println(i)
     }
+    println(words)
     return word
 }
 
-fun obtainGuess(attempt: Int): String { //complete!
+fun obtainGuess(attempt: Int): String { 
     var guess = ""
 
     do {
         print("Attempt ${attempt}: ")
         guess = readln()
-    } while (isValid(guess) == false)
+    } while (isValid(guess) == false)       // Repeatedly prompts if guess invalid
 
-    return guess
+    return guess.uppercase()
 }
 
-fun evaluateGuess(guess: String, target: String): List<Int> { //works but check it
-    val result = MutableList<Int>(5) {0}
+fun evaluateGuess(guess: String, target: String): List<Int> {
+    val result = MutableList<Int>(5) {0}    // Initialize all characters as 0
     for (i in 0..4) {
-        if (guess[i].lowercase() == target[i].lowercase()) {
+        if (guess[i] == target[i]) {        // Set correctly guessed as 1
             result[i] = 1
         }
     }
     return result
 }
 
-fun displayGuess(guess: String, matches: List<Int>) { //works perfectly but double check it
-    var wordSoFar = ""
-    var i = 0
-    while (i < 5) { //is there a neater way than a while loop?
-        if (matches[i] == 1) {
-            wordSoFar += guess[i]
+
+fun displayGuess(guess: String, matches: List<Int>) {
+    var output = ""
+    for (i in 0..4) {
+        if (matches[i] == 1) {              // Case 1: Correct guess
+            output += guess[i]
+        } else {                            // Case 2: Incorrect guess
+            output += "?"
         }
-        else {
-            wordSoFar += "?"
-        }
-        i += 1
     }
-    println(wordSoFar)
-}
-
-fun main() {
-    println("in main")
-    val names = mutableListOf("Hello", "Hi", "Heya", "Good Evening")
-    //println("word: ${pickRandomWord(names)}")
-    //obtainGuess(3)
-    //val result = evaluateGuess("hello","heyas")
-
-    displayGuess("hello", evaluateGuess("hello","heyas"))
+    println(output)
 }
