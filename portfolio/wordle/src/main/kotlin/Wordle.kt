@@ -1,25 +1,35 @@
 // Implement the six required functions here
 import java.io.File
+import kotlin.random.Random
+import kotlin.system.exitProcess
 
 const val WORD_LENGTH = 5
 
 fun isValid(word: String): Boolean {
+    // Reject if word does not contain 5 letters
     if (word.length != WORD_LENGTH || !word.all { it.isLetter() }) {
-        println("ERROR: Guess must contain 5 letters.")
+        println("ERROR: Guess must contain $WORD_LENGTH letters.")
         return false
     }
     return true
 }
 
-fun readWordList(filename: String): MutableList<String> = File(filename).useLines { it.toMutableList() }
+fun readWordList(filename: String): MutableList<String> {
+    val file = File(filename)
+    // Exit if file is empty or nonexistent
+    if (!file.exists() || file.readLines().isEmpty()) {
+        println("ERROR: Invalid file.")
+        exitProcess(1)
+    }
+    return file.readLines().toMutableList()
+}
 
-// NOTE TO SELF: Ask if its ok for it to be a little inefficient
 fun pickRandomWord(words: MutableList<String>): String {
-    // Randomize order of words list
-    words.shuffle()
-    // Remove and Return first word
-    val word = words[0]
-    words.removeAt(0)
+    // Pick a random index
+    val index = Random.nextInt(words.size)
+    // Remove and return word at index
+    val word = words[index]
+    words.removeAt(index)
     return word
 }
 
