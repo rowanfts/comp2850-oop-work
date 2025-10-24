@@ -1,7 +1,6 @@
 import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-// import java.io.File
 
 @Suppress("unused")
 class WordleTest : StringSpec({
@@ -24,17 +23,19 @@ class WordleTest : StringSpec({
     }
 
     // Testing pickRandomWord(words: MutableList<String>): String
-    "Selection of random word from list" {
-        withClue("length=1") { pickRandomWord(mutableListOf("HELLO")) shouldBe "HELLO" }
-        /*withClue("length=3") {
-            val temp = mutableListOf("HELLO", "HIIII", "HEYAS")
-            (pickRandomWord(temp) in temp) shouldBe true
-        }*/
+    "Selection of word from list" {
+        withClue("length=one") { pickRandomWord(mutableListOf("HELLO")) shouldBe "HELLO" }
     }
 
     // Testing readWordList(filename: String): MutableList<String>
+    "Opening and reading file to list" {
+        withClue("existing word") { readWordList("data/words.txt").contains("ABACK") shouldBe true }
+        withClue("nonexisting word") { readWordList("data/words.txt").contains("ABARK") shouldBe false }
+    }
+
     // Testing evaluateGuess(guess: String, target: String): List<Int>
     "Comparison of different guesses & targets" {
+        withClue("different word") { evaluateGuess("XXXXX", "HELLO") shouldBe listOf(0, 0, 0, 0, 0) }
         withClue("same word") { evaluateGuess("HELLO", "HELLO") shouldBe listOf(2, 2, 2, 2, 2) }
         withClue("first letter not in word") { evaluateGuess("XELLO", "HELLO") shouldBe listOf(0, 2, 2, 2, 2) }
         withClue("last letter not in word") { evaluateGuess("HELLX", "HELLO") shouldBe listOf(2, 2, 2, 2, 0) }
@@ -44,6 +45,5 @@ class WordleTest : StringSpec({
         withClue("incorrect position incorrect letters") {
             evaluateGuess("OXXXH", "HELLO") shouldBe listOf(1, 0, 0, 0, 1)
         }
-        withClue("different word") { evaluateGuess("XXXXX", "HELLO") shouldBe listOf(0, 0, 0, 0, 0) }
     }
 })
