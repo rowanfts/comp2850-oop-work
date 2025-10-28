@@ -38,7 +38,7 @@ fun obtainGuess(attempt: Int): String {
     // Repeatedly prompt user if invalid guess
     do {
         print("Attempt $attempt: ")
-        guess = readln()
+        guess = readln() //.trim or strip to delete blank spaces
     } while (isValid(guess) == false)
     return guess.uppercase()
 }
