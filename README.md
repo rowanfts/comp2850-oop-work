@@ -3,7 +3,7 @@
 **(Alternate version, not using GitHub Classroom)**
 
 This repository holds all of the work that you will do during the first
-five weeks of COMP2850.
+five weeks of COMP2850!
 
 Each worksheet task occupies its own subdirectory of `tasks`, and each
 portfolio assignment occupies its own subdirectory of `portfolio`. Please
