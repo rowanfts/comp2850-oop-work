@@ -14,6 +14,7 @@ fun main() = SwingUtilities.invokeLater {
         add(Rectangle(15, 120, 25, 60, Color.GREEN))
         add(Circle(290, 110, 60, Color.LIGHT_GRAY))
         add(Circle(165, 320, 35, Color.YELLOW))
+        add(Shape(0,0,Color.RED)) //shouldn't be allowed!
         // add(Triangle(185, 200, 70, 55, Color.RED))
     }
 
